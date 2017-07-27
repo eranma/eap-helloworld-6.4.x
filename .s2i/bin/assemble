@@ -14,17 +14,15 @@ function restore_saved_artifacts() {
     popd &> /dev/null
   fi
 }
-USER root
-echo 'jboss   ALL=(ALL:ALL) ALL' >> /etc/sudoers
-USER jboss
+
 # Source code provided to STI will be bind-mounted at /tmp/src
 # and then copied into /opt/wildfly/source for building.
 local_source_dir=/opt/jboss/source
-mkdir -p $local_source_dir
+sudo mkdir -p $local_source_dir
 
 # Resulting WAR files will be deployed to /wildfly/standalone/deployments
 deploy_dir=/jboss/standalone/deployments
-mkdir -p $deploy_dir
+sudo mkdir -p $deploy_dir
 
 # Copy the source from the bind mount in preparation for compilation
 cp -ad /tmp/src/* $local_source_dir
@@ -60,7 +58,7 @@ if [ -f "$local_source_dir/pom.xml" ]; then
 
   if [ -d $local_source_dir/modules ]; then
     echo "Copying modules from project..."
-    mkdir /jboss/provided_modules
+    sudo mkdir /jboss/provided_modules
     cp -r modules/* /jboss/provided_modules
   fi
 
@@ -82,7 +80,7 @@ else
 
   if [ -d $local_source_dir/modules ]; then
     echo "Copying modules from project..."
-    mkdir /v/provided_modules
+    sudo mkdir /v/provided_modules
     cp -r modules/* /jboss/provided_modules
   fi
   echo "...done"
