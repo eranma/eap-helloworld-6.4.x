@@ -17,11 +17,11 @@ function restore_saved_artifacts() {
 
 # Source code provided to STI will be bind-mounted at /tmp/src
 # and then copied into /opt/wildfly/source for building.
-local_source_dir=/opt/wildfly/source
+local_source_dir=/opt/jboss/source
 mkdir -p $local_source_dir
 
 # Resulting WAR files will be deployed to /wildfly/standalone/deployments
-deploy_dir=/wildfly/standalone/deployments
+deploy_dir=/jboss/standalone/deployments
 mkdir -p $deploy_dir
 
 # Copy the source from the bind mount in preparation for compilation
@@ -53,13 +53,13 @@ if [ -f "$local_source_dir/pom.xml" ]; then
   
   if [ -d $local_source_dir/cfg ]; then
     echo "Copying config files from project..."
-    cp cfg/* /wildfly/standalone/configuration
+    cp cfg/* /jboss/standalone/configuration
   fi
 
   if [ -d $local_source_dir/modules ]; then
     echo "Copying modules from project..."
-    mkdir /wildfly/provided_modules
-    cp -r modules/* /wildfly/provided_modules
+    mkdir /jboss/provided_modules
+    cp -r modules/* /jboss/provided_modules
   fi
 
   echo "...done"
@@ -75,13 +75,13 @@ else
   fi
   if [ -d $local_source_dir/cfg ]; then
     echo "Copying config files from project..."
-    cp cfg/* /wildfly/standalone/configuration
+    cp cfg/* /jboss/standalone/configuration
   fi
 
   if [ -d $local_source_dir/modules ]; then
     echo "Copying modules from project..."
-    mkdir /wildfly/provided_modules
-    cp -r modules/* /wildfly/provided_modules
+    mkdir /v/provided_modules
+    cp -r modules/* /jboss/provided_modules
   fi
   echo "...done"
 fi
